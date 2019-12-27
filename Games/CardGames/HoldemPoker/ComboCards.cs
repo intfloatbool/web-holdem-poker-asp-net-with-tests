@@ -12,10 +12,15 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker
         {
             return new ComboCards(combo, cards);
         }
+
+        public static ComboCards CreateEmpty()
+        {
+            return new EmptyCombo();
+        }
         public Combo Combo { get; private set; }
         public List<Card> Cards { get; private set; }
 
-        private ComboCards(Combo combo, List<Card> cards)
+        protected ComboCards(Combo combo, List<Card> cards)
         {
             this.Combo = combo;
             this.Cards = cards;

@@ -41,7 +41,7 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker
                 var currentCombo = searcher.SearcingCombo;
                 return ComboCards.Create(currentCombo, searchedCards);
             }
-            return null;
+            return ComboCards.CreateEmpty();
         }
     }
 }
