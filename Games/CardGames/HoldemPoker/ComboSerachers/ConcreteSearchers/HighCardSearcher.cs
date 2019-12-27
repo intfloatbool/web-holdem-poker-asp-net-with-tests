@@ -6,18 +6,16 @@ using System.Threading.Tasks;
 
 namespace EthWebPoker.Games.CardGames.HoldemPoker.ComboSerachers.ConcreteSearchers
 {
-    public class HighCardSearcher : ICardSearcher
+    public class HighCardSearcher : CardSearcherBase
     {
-        public Combo SearcingCombo => Combo.HIGH_CARD;
+        public override Combo SearcingCombo => Combo.HIGH_CARD;
 
-        public List<Card> SearchCards(List<Card> cardSource)
+        protected override void SearchCards()
         {
-            var cardsOfCombo = new List<Card>();
-            var higherCard = cardSource.OrderBy(card => card.Rank)
+            var higherCard = _cardSource.OrderBy(card => card.Rank)
                 .LastOrDefault();
             if (higherCard != null)
-                cardsOfCombo.Add(higherCard);
-            return cardsOfCombo;
+                _searchedCards.Add(higherCard);
         }
     }
 }

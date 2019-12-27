@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace EthWebPoker.Games.CardGames.HoldemPoker.ComboSerachers.ConcreteSearchers
 {
-    public class OnePairSearcher : CardSearcherBase
+    public class TwoPairsSearcher : CardSearcherBase
     {
-        public override Combo SearcingCombo => Combo.ONE_PAIR;
+        public override Combo SearcingCombo => Combo.TWO_PAIR;
 
         protected override void SearchCards()
         {
-            var searchingPairsCount = 1;
+            var searchingPairsCount = 2;
             var searchingPairs = HoldemHelper.GetPairsFromCollection(_cardSource).ToList();
-            if(searchingPairs.Count == searchingPairsCount)
+            if (searchingPairs.Count == searchingPairsCount)
             {
                 searchingPairs.ForEach(pair => _searchedCards.AddRange(pair.CardsCollection));
             }

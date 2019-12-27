@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EthWebPoker.Games.CardGames.CardBase;
+using EthWebPoker.Games.CardGames.HoldemPoker.Cards;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +23,32 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker
                
             }
             return _combinations;
+        }
+
+        public static IEnumerable<PairOfCardsByRank> GetPairsFromCollection(List<Card> tableCards)
+        {
+            var countOfPair = 2;
+            var tableRanks = tableCards.Select(card => card.Rank);
+            var tableCardsCopy = tableCards.ToList();
+            foreach (var rank in tableRanks)
+            {
+                var anotherCardsWithThisRank =
+                    tableCardsCopy.Where(card => card.Rank == rank)
+                    .ToArray();
+                var searchedCount = anotherCardsWithThisRank.Length;
+                if (searchedCount == countOfPair)
+                {
+                    var firstCard = anotherCardsWithThisRank[0];
+                    var secondCard = anotherCardsWithThisRank[1];
+
+                    var pair = PairOfCardsByRank.CreatePair(
+                        firstCard,
+                        secondCard);
+                    tableCardsCopy.Remove(firstCard);
+                    tableCardsCopy.Remove(secondCard);
+                    yield return pair;
+                }
+            }
         }
     }
 }

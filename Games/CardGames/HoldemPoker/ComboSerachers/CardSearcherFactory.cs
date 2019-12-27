@@ -12,7 +12,7 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.ComboSerachers
         {
             { Combo.HIGH_CARD, new HighCardSearcher()},
             { Combo.ONE_PAIR, new OnePairSearcher()},
-            { Combo.TWO_PAIR, null},
+            { Combo.TWO_PAIR, new TwoPairsSearcher()},
             { Combo.THREE_OF_A_KIND, null},
             { Combo.STRAIGHT, null},
             { Combo.FLUSH, null},
