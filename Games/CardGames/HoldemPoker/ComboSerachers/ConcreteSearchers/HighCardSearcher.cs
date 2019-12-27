@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EthWebPoker.Games.CardGames.HoldemPoker.ComboSerachers
+namespace EthWebPoker.Games.CardGames.HoldemPoker.ComboSerachers.ConcreteSearchers
 {
     public class HighCardSearcher : ICardSearcher
     {

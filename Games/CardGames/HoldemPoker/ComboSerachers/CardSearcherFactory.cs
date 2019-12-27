@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EthWebPoker.Games.CardGames.HoldemPoker.ComboSerachers.ConcreteSearchers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.ComboSerachers
         private static Dictionary<Combo, ICardSearcher> _cardSearchers = new Dictionary<Combo, ICardSearcher>()
         {
             { Combo.HIGH_CARD, new HighCardSearcher()},
-            { Combo.ONE_PAIR, null},
+            { Combo.ONE_PAIR, new OnePairSearcher()},
             { Combo.TWO_PAIR, null},
             { Combo.THREE_OF_A_KIND, null},
             { Combo.STRAIGHT, null},

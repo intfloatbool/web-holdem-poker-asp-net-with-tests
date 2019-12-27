@@ -38,6 +38,9 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker
                     continue;
 
                 var searchedCards = searcher.SearchCards(cards);
+                if (searchedCards.Any() == false)
+                    continue;
+
                 var currentCombo = searcher.SearcingCombo;
                 return ComboCards.Create(currentCombo, searchedCards);
             }
