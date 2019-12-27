@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EthWebPoker", "EthWebPoker.csproj", "{CDE71D8F-C79B-41DD-A0CC-91430F5B421B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebEthGamesTests", "..\WebEthGamesTests\WebEthGamesTests.csproj", "{5A5719C5-3509-4E90-8678-88D00176171F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{CDE71D8F-C79B-41DD-A0CC-91430F5B421B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDE71D8F-C79B-41DD-A0CC-91430F5B421B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDE71D8F-C79B-41DD-A0CC-91430F5B421B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A5719C5-3509-4E90-8678-88D00176171F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A5719C5-3509-4E90-8678-88D00176171F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A5719C5-3509-4E90-8678-88D00176171F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A5719C5-3509-4E90-8678-88D00176171F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
