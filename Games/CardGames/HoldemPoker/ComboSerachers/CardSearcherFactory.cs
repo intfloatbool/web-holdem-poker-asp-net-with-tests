@@ -9,7 +9,7 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.ComboSerachers
     {
         private static Dictionary<Combo, ICardSearcher> _cardSearchers = new Dictionary<Combo, ICardSearcher>()
         {
-            { Combo.HIGH_CARD, null},
+            { Combo.HIGH_CARD, new HighCardSearcher()},
             { Combo.ONE_PAIR, null},
             { Combo.TWO_PAIR, null},
             { Combo.THREE_OF_A_KIND, null},

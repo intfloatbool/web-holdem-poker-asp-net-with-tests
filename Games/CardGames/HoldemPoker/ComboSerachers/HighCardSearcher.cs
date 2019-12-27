@@ -12,7 +12,12 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.ComboSerachers
 
         public List<Card> SearchCards(List<Card> cardSource)
         {
-            throw new NotImplementedException();
+            var cardsOfCombo = new List<Card>();
+            var higherCard = cardSource.OrderBy(card => card.Rank)
+                .LastOrDefault();
+            if (higherCard != null)
+                cardsOfCombo.Add(higherCard);
+            return cardsOfCombo;
         }
     }
 }

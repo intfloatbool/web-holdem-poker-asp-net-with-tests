@@ -34,13 +34,12 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker
             foreach (var combination in _reversedCombinations)
             {
                 var searcher = CardSearcherFactory.GetCardSearcherByCombo(combination);
+                if (searcher == null)
+                    continue;
+
                 var searchedCards = searcher.SearchCards(cards);
-                if(searchedCards != null) 
-                {
-                    var currentCombo = searcher.SearcingCombo;
-                    return ComboCards.Create(currentCombo, searchedCards);
-                }
-                
+                var currentCombo = searcher.SearcingCombo;
+                return ComboCards.Create(currentCombo, searchedCards);
             }
             return null;
         }

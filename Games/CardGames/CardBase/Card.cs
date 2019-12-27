@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EthWebPoker.Games.CardGames.CardBase
 {
-    public struct Card
+    public class Card
     {
         public Rank Rank;
         public Suit Suit;
