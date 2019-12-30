@@ -25,9 +25,9 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker
             return _combinations;
         }
 
-        public static IEnumerable<PairOfCardsByRank> GetPairsFromCollection(List<Card> tableCards)
+        public static IEnumerable<PairOfCardsByRank> GetPairsFromCollection(List<Card> tableCards,
+            int cardsCount = 2)
         {
-            var countOfPair = 2;
             var tableRanks = tableCards.Select(card => card.Rank);
             var tableCardsCopy = tableCards.ToList();
             foreach (var rank in tableRanks)
@@ -36,7 +36,7 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker
                     tableCardsCopy.Where(card => card.Rank == rank)
                     .ToArray();
                 var searchedCount = anotherCardsWithThisRank.Length;
-                if (searchedCount == countOfPair)
+                if (searchedCount == cardsCount)
                 {
                     var firstCard = anotherCardsWithThisRank[0];
                     var secondCard = anotherCardsWithThisRank[1];
