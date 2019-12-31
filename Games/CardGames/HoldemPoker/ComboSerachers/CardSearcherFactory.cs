@@ -17,7 +17,7 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.ComboSerachers
             { Combo.STRAIGHT, new StraightSearcher()},
             { Combo.FLUSH, new FlushSearcher()},
             { Combo.FULL_HOUSE, new FullHouseSearcher()},
-            { Combo.FOUR_OF_A_KIND, null},
+            { Combo.FOUR_OF_A_KIND, new FourOfKindSearcher()},
             { Combo.STRAIGHT_FLUSH, null},
             { Combo.ROYAL_FLUSH, null}
         };
