@@ -7,7 +7,7 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.ComboSerachers.ConcreteSearche
 {
     public class StraightSearcher : CardSearcherBase
     {
-        private const int ORDERED_COUNT = 5;
+        protected const int ORDERED_COUNT = 5;
         public override Combo SearcingCombo => Combo.STRAIGHT;
 
         protected override void SearchCards()
