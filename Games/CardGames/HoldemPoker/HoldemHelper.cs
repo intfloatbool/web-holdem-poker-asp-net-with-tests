@@ -25,6 +25,22 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker
             return _combinations;
         }
 
+        private static List<Suit> _suits;
+        public static List<Suit> GetSuits()
+        {
+            if (_suits == null)
+            {
+                var suitNames = Enum.GetNames(typeof(Suit));
+                _suits = new List<Suit>();
+                for (int i = 0; i < suitNames.Length; i++)
+                {
+                    _suits.Add((Suit)i);
+                }
+
+            }
+            return _suits;
+        }
+
         public static IEnumerable<PairOfCardsByRank> GetPairsFromCollection(List<Card> tableCards,
             int cardsCount = 2)
         {
@@ -49,6 +65,27 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker
                     yield return pair;
                 }
             }
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tableCards">cards from table</param>
+        /// <param name="suitsCount"> cout to search same suits</param>
+        /// <returns>Tuple<Suit = SearchedSuit, bool = isHaveSame></returns>
+        public static Tuple<Suit, List<Card>> GetSuitedCards(List<Card> tableCards, int suitsCount = 5)
+        {
+            foreach(var suit in GetSuits())
+            {
+                var suitableCards = tableCards.Where(card => card.Suit == suit);
+                if(suitableCards.Count() == suitsCount)
+                {
+                    var resultTuple = new Tuple<Suit, List<Card>>(Suit.CLUBS, suitableCards.ToList());
+                    return resultTuple;
+                }
+            }
+
+            return null;
         }
     }
 }
