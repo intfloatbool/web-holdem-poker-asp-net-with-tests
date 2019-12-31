@@ -11,12 +11,13 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.ComboSerachers.ConcreteSearche
 
         protected override void SearchCards()
         {
-            var searchingPairsCount = 1;
             var sameCardsCount = 3;
-            var searchingPairs = HoldemHelper.GetPairsFromCollection(_cardSource, sameCardsCount).ToList();
-            if (searchingPairs.Count == searchingPairsCount)
+            var searchingPairs = HoldemHelper.GetPairsFromCollection(_cardSource, sameCardsCount)?.ToList();
+            if (searchingPairs == null)
+                return;
+            if (searchingPairs.Count == sameCardsCount)
             {
-                searchingPairs.ForEach(pair => _searchedCards.AddRange(pair.CardsCollection));
+                _searchedCards.AddRange(searchingPairs);
             }
         }
     }
