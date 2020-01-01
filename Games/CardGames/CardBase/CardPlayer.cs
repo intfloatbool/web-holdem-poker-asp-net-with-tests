@@ -5,32 +5,23 @@ using System.Threading.Tasks;
 
 namespace EthWebPoker.Games.CardGames.CardBase
 {
-    public class CardPlayer
+    public class CardPlayer : ICardHolder
     {
-        public List<Card> Cards { get; protected set; }
-        public int CardCount => Cards.Count;
+        public List<Card> Cards { get; private set; }
 
-        public CardPlayer(IEnumerable<Card> cards = null)
+        public CardPlayer()
         {
-            if(cards != null)
-            {
-                this.Cards = cards.ToList();
-            } else
-            {
-                this.Cards = new List<Card>();
-            }
+            Cards = new List<Card>();
         }
 
         public void AddCard(Card card)
         {
-            this.Cards.Add(card);
+            Cards.Add(card);
         }
 
-        public List<Card> DropCards()
+        public void FoldCards()
         {
-            var lastCards = Cards.ToList();
             Cards.Clear();
-            return lastCards;
         }
     }
 }
