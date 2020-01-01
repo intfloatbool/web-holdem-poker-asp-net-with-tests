@@ -20,17 +20,19 @@ namespace EthWebPoker.Games.CardGames.CardBase
 
         private Rank _minRank;
 
-        public List<Card> DeckCards { get; private set; } = new List<Card>();
+        public List<Card> DeckCards { get; private set; }
 
         private DeckOfCards(Rank minRank)
         {
             _minRank = minRank;
+
+            DeckCards = new List<Card>(); 
         }
 
         public void RefershDeck(bool isShuffle = true)
         {
-            DeckCards.Clear();
-            GenerateCards();
+            if(!DeckCards.Any())
+                GenerateCards();
             if(isShuffle)
                 ShuffleCards();          
         }
