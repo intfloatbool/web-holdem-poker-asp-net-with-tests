@@ -34,6 +34,9 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.ComboSerachers.ConcreteSearche
                             _searchedCards.Add(currentCard);
 
                         _searchedCards.Add(nextCard);
+
+                        if (_searchedCards.Count == ORDERED_COUNT)
+                            break;
                     } else
                     {
                         _searchedCards.Clear();
