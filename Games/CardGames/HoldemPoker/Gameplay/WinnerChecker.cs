@@ -89,7 +89,28 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
             {
                 case Combo.TWO_PAIR:
                     {
-                        
+                        List<PlayerWithCombo> weakestPlayers = new List<PlayerWithCombo>();
+                        var lastHandStrength = 0;
+                        foreach(var playerCombo in playersWithCombo)
+                        {
+                            var handStrength = GetHandStrength(playerCombo);
+
+                            if(handStrength >= lastHandStrength)
+                            {
+                                lastHandStrength = handStrength;
+                                continue;
+                            }
+
+                            if(handStrength < lastHandStrength)
+                            {
+                                weakestPlayers.Add(playerCombo);
+                            }
+                        }
+
+                        weakestPlayers.ForEach(wp =>
+                        {
+                            playersWithCombo.Remove(wp);
+                        });
                         break;
                     }
                 default:
@@ -107,6 +128,16 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
             if (!isSameKicker)
                 playersWithCombo.RemoveAll(pc => pc.Kicker < highestKicker);
             return isSameKicker;
+        }
+
+        private int GetHandStrength(PlayerWithCombo comboPlayer)
+        {
+            var cardStrength = 0;
+            comboPlayer.ComboCards.ForEach(c =>
+            {
+                cardStrength += (int)c.Rank;
+            });
+            return cardStrength;
         }
     }
 }
