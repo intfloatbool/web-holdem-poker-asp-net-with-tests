@@ -89,28 +89,7 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
             {
                 case Combo.TWO_PAIR:
                     {
-                        List<PlayerWithCombo> weakestPlayers = new List<PlayerWithCombo>();
-                        var lastHandStrength = 0;
-                        foreach(var playerCombo in playersWithCombo)
-                        {
-                            var handStrength = GetHandStrength(playerCombo);
-
-                            if(handStrength >= lastHandStrength)
-                            {
-                                lastHandStrength = handStrength;
-                                continue;
-                            }
-
-                            if(handStrength < lastHandStrength)
-                            {
-                                weakestPlayers.Add(playerCombo);
-                            }
-                        }
-
-                        weakestPlayers.ForEach(wp =>
-                        {
-                            playersWithCombo.Remove(wp);
-                        });
+                        CorrectTwoParisCombo(playersWithCombo);
                         break;
                     }
                 default:
@@ -118,6 +97,37 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
                         RemoveAllPlayersByKicker(playersWithCombo);
                         break;
                     }
+            }
+        }
+
+        private void CorrectTwoParisCombo(List<PlayerWithCombo> playersWithCombo)
+        {
+            List<PlayerWithCombo> weakestPlayers = null;
+            var lastHandStrength = 0;
+            foreach (var playerCombo in playersWithCombo)
+            {
+                var handStrength = GetHandStrength(playerCombo);
+
+                if (handStrength >= lastHandStrength)
+                {
+                    lastHandStrength = handStrength;
+                    continue;
+                }
+
+                if (handStrength < lastHandStrength)
+                {
+                    if (weakestPlayers == null)
+                        weakestPlayers = new List<PlayerWithCombo>();
+                    weakestPlayers.Add(playerCombo);
+                }
+            }
+
+            if (weakestPlayers != null)
+            {
+                weakestPlayers.ForEach(wp =>
+                {
+                    playersWithCombo.Remove(wp);
+                });
             }
         }
 
