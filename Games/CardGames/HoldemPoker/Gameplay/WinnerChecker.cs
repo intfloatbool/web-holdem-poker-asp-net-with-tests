@@ -10,6 +10,8 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
     {
         private IEnumerable<ICardHolder> _players;
         private ICardHolder _table;
+        private List<PlayerWithCombo> _playersWithCombo;
+
         private WinnerContainer _winnerContainer = new WinnerContainer()
         {
             Players = new List<ICardHolder>()
@@ -82,6 +84,7 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
         private void CorrectPlayersListBySameCombo(List<PlayerWithCombo> playersWithCombo)
         {
             var combination = playersWithCombo.FirstOrDefault()?.Combination;
+            this._playersWithCombo = playersWithCombo;
 
             if (combination == null)
                 return;
@@ -89,22 +92,31 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
             {
                 case Combo.TWO_PAIR:
                     {
-                        CorrectTwoParisCombo(playersWithCombo);
+                        RemovePlayersByHandStrength();
+                        break;
+                    }
+                case Combo.FULL_HOUSE:
+                    {
+                        RemovePlayersByHandStrength();
                         break;
                     }
                 default:
                     {
-                        RemoveAllPlayersByKicker(playersWithCombo);
+                        RemoveAllPlayersByKicker();
                         break;
                     }
             }
         }
 
-        private void CorrectTwoParisCombo(List<PlayerWithCombo> playersWithCombo)
+        private void RemovePlayersByHandStrength()
         {
             List<PlayerWithCombo> weakestPlayers = null;
+
+            var orderedbyHandStrength = _playersWithCombo.OrderByDescending(pc =>
+           GetHandStrength(pc));
+
             var lastHandStrength = 0;
-            foreach (var playerCombo in playersWithCombo)
+            foreach (var playerCombo in orderedbyHandStrength)
             {
                 var handStrength = GetHandStrength(playerCombo);
 
@@ -126,17 +138,17 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
             {
                 weakestPlayers.ForEach(wp =>
                 {
-                    playersWithCombo.Remove(wp);
+                    _playersWithCombo.Remove(wp);
                 });
             }
         }
 
-        private bool RemoveAllPlayersByKicker(List<PlayerWithCombo> playersWithCombo)
+        private bool RemoveAllPlayersByKicker()
         {          
-            var highestKicker = playersWithCombo.Max(pc => pc.Kicker);
-            var isSameKicker = playersWithCombo.All(pc => pc.Kicker == highestKicker);
+            var highestKicker = _playersWithCombo.Max(pc => pc.Kicker);
+            var isSameKicker = _playersWithCombo.All(pc => pc.Kicker == highestKicker);
             if (!isSameKicker)
-                playersWithCombo.RemoveAll(pc => pc.Kicker < highestKicker);
+                _playersWithCombo.RemoveAll(pc => pc.Kicker < highestKicker);
             return isSameKicker;
         }
 
