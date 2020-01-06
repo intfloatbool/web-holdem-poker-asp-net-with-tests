@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EthWebPoker.Games.CardGames.CardBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,8 +14,11 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.ComboSerachers.ConcreteSearche
         protected override void SearchCards()
         {
 
+            //remove duplicates
+            var cardsWithoutRankDuplicates = _cardSource.Distinct(new CardRanksComparer());
+
             //from lowest to harder
-            var sortedCardsByRank = _cardSource.OrderBy(card => card.Rank).ToArray();
+            var sortedCardsByRank = cardsWithoutRankDuplicates.OrderBy(card => card.Rank).ToArray();
             for(int i = 0; i < sortedCardsByRank.Length; i++)
             {
                 var nextCardIndex = i + 1;
