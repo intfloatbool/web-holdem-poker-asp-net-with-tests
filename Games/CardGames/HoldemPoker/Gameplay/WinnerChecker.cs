@@ -1,4 +1,5 @@
 ﻿using EthWebPoker.Games.CardGames.CardBase;
+using EthWebPoker.Games.CardGames.HoldemPoker.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,8 +70,14 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
                     CorrectPlayersListBySameCombo(playersWithCombo);
                 }
                 foreach(var playerWithCombo in playersWithHighCombo)
-                {                
-                    _winnerContainer.Players.Add(playerWithCombo.Player);
+                {
+                    var player = playerWithCombo.Player;
+                    if(player is HoldemPlayer holdemPlayer)
+                    {
+                        holdemPlayer.ComboCards = playerWithCombo.ComboCards;
+                        holdemPlayer.Combination = playerWithCombo.Combination;
+                    } 
+                    _winnerContainer.Players.Add(player);
                 }
             }
 

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
+namespace EthWebPoker.Games.CardGames.HoldemPoker.Player
 {
-    public class WinnerContainer
+    public class HoldemPlayer : CardPlayer
     {
-        public List<ICardHolder> Players { get;  set; }
         public Combo? Combination { get; set; }
+        public List<Card> ComboCards { get; set; }
     }
 }
