@@ -76,8 +76,10 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
                     {
                         holdemPlayer.ComboCards = playerWithCombo.ComboCards;
                         holdemPlayer.Combination = playerWithCombo.Combination;
+
+                    _winnerContainer.Players.Add(holdemPlayer);
                     } 
-                    _winnerContainer.Players.Add(player);
+                    
                 }
             }
 

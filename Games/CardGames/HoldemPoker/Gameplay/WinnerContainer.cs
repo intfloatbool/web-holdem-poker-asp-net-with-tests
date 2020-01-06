@@ -1,4 +1,5 @@
 ﻿using EthWebPoker.Games.CardGames.CardBase;
+using EthWebPoker.Games.CardGames.HoldemPoker.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace EthWebPoker.Games.CardGames.CardBase
 {
+    [Serializable]
     public class Card
     {
         public Rank Rank;

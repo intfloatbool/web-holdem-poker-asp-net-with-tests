@@ -8,6 +8,7 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Player
 {
     public class HoldemPlayer : CardPlayer
     {
+        public PlayerType PlayerType { get; set; }
         public Combo? Combination { get; set; }
         public List<Card> ComboCards { get; set; }
     }
