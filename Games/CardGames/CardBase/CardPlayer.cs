@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace EthWebPoker.Games.CardGames.CardBase
 {
-    public class CardPlayer : ICardHolder
+    public class CardPlayer : ICardPlayer
     {
+        public PlayerType PlayerType { get; set; }
         public List<Card> Cards { get; private set; }
 
         public CardPlayer()

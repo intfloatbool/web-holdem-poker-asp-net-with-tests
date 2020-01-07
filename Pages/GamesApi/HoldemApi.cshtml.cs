@@ -19,8 +19,8 @@ namespace EthWebPoker
         {
             //FOR TEST
             _holdemGame.Start();
-            var result = _holdemGame.GetResult();
-            return new JsonResult(result);
+            //var result = _holdemGame.GetResult();
+            return new JsonResult(null);
         }
     }
 }

@@ -9,18 +9,18 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
 {
     public class WinnerChecker
     {
-        private IEnumerable<ICardHolder> _players;
+        private IEnumerable<ICardPlayer> _players;
         private ICardHolder _table;
         private List<PlayerWithCombo> _playersWithCombo;
 
         private WinnerContainer _winnerContainer = new WinnerContainer()
         {
-            Players = new List<ICardHolder>()
+            Players = new List<ICardPlayer>()
         };
 
         private class PlayerWithCombo
         {
-            public ICardHolder Player { get; set; }
+            public ICardPlayer Player { get; set; }
             public Combo? Combination { get; set; }
             public Rank Kicker { get; set; }
             public List<Card> ComboCards { get; set; }
@@ -33,7 +33,7 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
             _winnerContainer.Players?.Clear();
         }
 
-        public WinnerContainer GetWinnerWithCombo(IEnumerable<ICardHolder> players, ICardHolder table)
+        public WinnerContainer GetWinnerWithCombo(IEnumerable<ICardPlayer> players, ICardHolder table)
         {
             ResetWinnerContainer();
 

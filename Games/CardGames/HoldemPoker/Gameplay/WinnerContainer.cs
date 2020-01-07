@@ -9,7 +9,7 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
 {
     public class WinnerContainer
     {
-        public List<ICardHolder> Players { get;  set; }
+        public List<ICardPlayer> Players { get;  set; }
         public Combo? Combination { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using EthWebPoker.Games.CardGames.CardBase;
+﻿using EthWebPoker.Games.Base;
+using EthWebPoker.Games.CardGames.CardBase;
 using EthWebPoker.Games.CardGames.HoldemPoker.Player;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -9,8 +10,10 @@ using System.Threading.Tasks;
 
 namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
 {
-    public class HoldemGame
+    public class HoldemGame: IGame
     {
+        public GameType GameType { get; } = GameType.HOLDEM_POKER;
+
         private CardDealer _dealer;
         private DeckOfCards _deck;
         private CardTable _table;
@@ -22,8 +25,9 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
             PlayerType.PLAYER_2
         };
 
-        private Dictionary<PlayerType, HoldemPlayer> _playersDict = new Dictionary<PlayerType, HoldemPlayer>();   
-        
+        private Dictionary<PlayerType, HoldemPlayer> _playersDict = new Dictionary<PlayerType, HoldemPlayer>();
+
+        private WinnerContainer _currentWinnerContainer;
 
         public HoldemGame()
         {
@@ -60,9 +64,14 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
 
         public IEnumerable<HoldemPlayer> GetWinners()
         {
-            var winnerContainer = _winnerChecker.GetWinnerWithCombo(_playersDict.Values,
+            this._currentWinnerContainer = _winnerChecker.GetWinnerWithCombo(_playersDict.Values,
                 _table);
-            return winnerContainer.Players.ConvertAll(p => (HoldemPlayer)p);
+            return _currentWinnerContainer.Players.ConvertAll(p => (HoldemPlayer)p);
+        }
+
+        public IEnumerable<PlayerType> GetWinnersByType()
+        {
+            return _currentWinnerContainer.Players.Select(p => p.PlayerType);
         }
 
         public IEnumerable<Card> GetTableCards()
@@ -79,7 +88,7 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
             public CardTable CardTable;
         }
 
-        public string GetResult()
+        public string GetJsonResult()
         {
             var winners = GetWinners().Select(w => w.PlayerType);
             var result = new HoldemGameResult()
@@ -89,6 +98,7 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.Gameplay
                 Winners = winners.ToArray(),
                 CardTable = _table
             };
+
             string output = JsonConvert.SerializeObject(result, _converter);
             return output;
         }
