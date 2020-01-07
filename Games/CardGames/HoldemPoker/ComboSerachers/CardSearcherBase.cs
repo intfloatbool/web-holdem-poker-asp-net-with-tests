@@ -15,9 +15,9 @@ namespace EthWebPoker.Games.CardGames.HoldemPoker.ComboSerachers
         public virtual List<Card> SearchCards(List<Card> cardSource)
         {
             _cardSource = cardSource;
+            _searchedCards.Clear();
             SearchCards();
             var searchedCopy = _searchedCards.ToList();
-            _searchedCards.Clear();
             return searchedCopy;
         }
     }

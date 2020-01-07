@@ -48,10 +48,10 @@ namespace EthWebPoker.Games
 
         private void UpdateResultContainer()
         {
-            ResultContainer.MatchID++;
-            ResultContainer.Winners = Game.GetWinnersByType().ToArray();
-            ResultContainer.GameType = Game.GameType;
+            ResultContainer.MatchID++;        
+            ResultContainer.GameType = Game.GameType.ToString();
             ResultContainer.GameResultJson = Game.GetJsonResult();
+            ResultContainer.Winners = Game.GetWinnersByType().Select(t => t.ToString()).ToArray();
 
             OnResultUpdated(ResultContainer);
         }

@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 
 namespace EthWebPoker.Games
 {
+    [Serializable]
     public class GameResultContainer
     {
         public ulong MatchID { get; set; } = 0;
-        public PlayerType[] Winners { get; set; }
-        public GameType? GameType { get; set; }
+        public string[] Winners { get; set; }
+        public string GameType { get; set; }
         public string GameResultJson { get; set; }
     }
 }
