@@ -10,6 +10,11 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\Games\" />
+    <Folder Include="wwwroot\img\player\" />
+  </ItemGroup>
+
 
 
 </Project>

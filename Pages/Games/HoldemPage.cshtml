@@ -1,0 +1,48 @@
+﻿@page
+@model HoldemPageModel
+@{
+    ViewData["Title"] = "HoldemGame page";
+}
+
+<link rel="stylesheet" href="~/css/Games/holdem.css" />
+<div class="text-center">
+    <p> Hello this is holdem page!</p>
+    <div class="container" id="holdemView">
+        <div class="row" id="gameRow">
+            <div class="col">
+                <h4>Vladimir Bot</h4>
+                <img src="~/img/player/bot_1.png" id="playerImg" />
+                <div>
+                    <img src="~/img/Games/CardsResizing/BACK.png" class="playingCard" />
+                    <img src="~/img/Games/CardsResizing/BACK.png" class="playingCard" />
+                </div>
+            </div>
+            <div class="col">
+                <h4>Boriz Bot</h4>
+                <img src="~/img/player/bot_2.png" id="playerImg" />
+                <div>
+                    <img src="~/img/Games/CardsResizing/BACK.png" class="playingCard" />
+                    <img src="~/img/Games/CardsResizing/BACK.png" class="playingCard" />
+                </div>
+            </div>
+        </div>
+        <div class="row" id="matchInfoRow">
+            <div class="col">
+                <h1>Match info</h1>
+            </div>
+        </div>
+        <div class="row" id="tableRow">
+            <div class="col">
+                <div>
+                    <img src="~/img/Games/CardsResizing/BACK.png" class="playingCard" />
+                    <img src="~/img/Games/CardsResizing/BACK.png" class="playingCard" />
+                    <img src="~/img/Games/CardsResizing/BACK.png" class="playingCard" />
+                    <img src="~/img/Games/CardsResizing/BACK.png" class="playingCard" />
+                    <img src="~/img/Games/CardsResizing/BACK.png" class="playingCard" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/Games/HoldemPage.js"></script>
+</div>
