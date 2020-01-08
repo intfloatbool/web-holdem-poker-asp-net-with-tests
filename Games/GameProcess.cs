@@ -1,6 +1,7 @@
 ﻿using EthWebPoker.Games.Base;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,8 +10,8 @@ namespace EthWebPoker.Games
     public class GameProcess
     {
         public IGame Game { get; set; }
-        public int IntervalTimeMs { get; set; } = 2000;
-        public int WaitTimeIntervalms { get; set; } = 2000;
+        public int IntervalTimeMs { get; set; } = 20000;
+        public int WaitTimeIntervalms { get; set; } = 10000;
         public GameResultContainer ResultContainer { get; private set; }
 
         public Action<GameResultContainer> OnResultUpdated = (result) => { };
@@ -48,6 +49,8 @@ namespace EthWebPoker.Games
 
         private void UpdateResultContainer()
         {
+            var culture = new CultureInfo("en-US");
+            ResultContainer.Date = DateTime.Now.ToString(culture);
             ResultContainer.MatchID++;        
             ResultContainer.GameType = Game.GameType.ToString();
             ResultContainer.GameResultJson = Game.GetJsonResult();
@@ -58,6 +61,7 @@ namespace EthWebPoker.Games
 
         private void ResetResultContainer()
         {
+            ResultContainer.Date = null;
             ResultContainer.Winners = null;
             ResultContainer.GameType = null;
             ResultContainer.GameResultJson = null;

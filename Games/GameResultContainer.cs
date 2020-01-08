@@ -8,6 +8,7 @@ namespace EthWebPoker.Games
     [Serializable]
     public class GameResultContainer
     {
+        public string Date { get; set; }
         public ulong MatchID { get; set; } = 0;
         public string[] Winners { get; set; }
         public string GameType { get; set; }
