@@ -27,8 +27,20 @@ const CardElements = {
     Table_Card5: null
 }
 
+const MatchInfoElements = {
+    WinnerText: null,
+    ComboName: null,
+    WinnerContainer: null
+}
+
 document.addEventListener('DOMContentLoaded', function () {
-    console.log(`HELLO! ITS A POKER FRONT!`);
+
+    MatchInfoElements.WinnerText = document.getElementById('winnerNameText');
+    MatchInfoElements.ComboName = document.getElementById('combinationName');
+    MatchInfoElements.WinnerContainer = document.getElementById('matchInfoRow');
+
+    MatchInfoElements.WinnerContainer.hidden = true;
+
     initializeCardImagesDOM();
     setInterval(handleServerData, delayToFetchMs);
 });
@@ -93,11 +105,18 @@ function handleMatchCards(matchData) {
 }
 
 function showWinners(matchResult) {
+
+    MatchInfoElements.WinnerContainer.hidden = false;
+    MatchInfoElements.WinnerText.innerText = "";
+
     const winners = matchResult.Winners;
     for (let playerWinnerID of winners) {
         const playerKeyInData = playerWinnerID === 'PLAYER_1' ? 'Player1' : 'Player2';
         const player = matchResult[playerKeyInData];
         highlightCombo(player.ComboCards, playerWinnerID);
+
+        MatchInfoElements.WinnerText.innerText += `${CardData.BotNames[playerWinnerID]}\n`;
+        MatchInfoElements.ComboName.innerText = CardData.ComboPrettyNames[player.Combination];
     }
 }
 
@@ -119,6 +138,7 @@ function highlightCombo(comboCards, playerType) {
 }
 
 function hideAllCards() {
+    MatchInfoElements.WinnerContainer.hidden = true;
     for (let imgIdKey in CardElements) {
         const cardImgElem = CardElements[imgIdKey];
         cardImgElem.style = "";
@@ -126,6 +146,10 @@ function hideAllCards() {
             cardImgElem.src = cardBackPath;
         }
     }
+}
+
+function printWinnerData(winnerData) {
+
 }
 
 function getCardImagePath(cardData) {

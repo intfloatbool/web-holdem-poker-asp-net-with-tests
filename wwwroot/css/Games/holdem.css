@@ -9,6 +9,15 @@
     max-height: 100px;
 }
 
+#matchInfoRow {
+    border: 5px solid #2a2a2a;
+}
+
+#winnerNameText, #combinationName {
+    color: saddlebrown;
+}
+
+
 .playingCard {
     width: 50px;
 }
