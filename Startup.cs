@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EthWebPoker.Games;
+using EthWebPoker.Games.Base;
 using EthWebPoker.Games.CardGames.HoldemPoker.Gameplay;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,10 +27,12 @@ namespace EthWebPoker
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            var holdemProcess = new GameProcess(new HoldemGame());
-            holdemProcess.StartGameProcess();
+            services.AddControllers(); // For API Controllers
 
-            services.AddSingleton(typeof(GameProcess), holdemProcess);
+            var gameProcessProvider = new GameProcessProvider();
+            gameProcessProvider.StartAllGames();
+
+            services.AddSingleton(typeof(IGameProcessProvider), gameProcessProvider);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +59,7 @@ namespace EthWebPoker
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers(); // < for API controllers
             });
         }
     }

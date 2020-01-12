@@ -1,4 +1,5 @@
 ﻿using EthWebPoker.Games.Base;
+using EthWebPoker.Games.CardGames.HoldemPoker.Gameplay;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,6 +10,11 @@ namespace EthWebPoker.Games
 {
     public class GameProcess
     {
+        public static GameProcess HoldemGameProcess()
+        {
+            return new GameProcess(new HoldemGame());
+        }
+
         public IGame Game { get; set; }
         public int IntervalTimeMs { get; set; } = 20000;
         public int WaitTimeIntervalms { get; set; } = 10000;
@@ -16,7 +22,7 @@ namespace EthWebPoker.Games
 
         public Action<GameResultContainer> OnResultUpdated = (result) => { };
 
-        public GameProcess(IGame game)
+        private GameProcess(IGame game)
         {
             this.Game = game;
             this.ResultContainer = new GameResultContainer();
