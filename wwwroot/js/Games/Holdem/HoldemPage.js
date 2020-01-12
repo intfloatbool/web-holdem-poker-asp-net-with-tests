@@ -3,6 +3,14 @@
 const cardPath = "/img/Games/CardsResizing";
 const cardBackPath = `${cardPath}/BACK.png`;
 const fetchDataUrl = '/api/HoldemGame';
+const comboBorderStyle = "border: 5px solid"
+const player1_borderColor = '#014d68';
+const player2_borderColor = '#454545';
+
+const getStyleByColor = (color) => {
+    return `${comboBorderStyle} ${color};`;
+}
+
 const delayToFetchMs = 3000;
 
 let lastMatchId = -1;
@@ -79,12 +87,41 @@ function handleMatchCards(matchData) {
     CardElements.Table_Card4.src = getCardImagePath(tableCards[3]);
     CardElements.Table_Card5.src = getCardImagePath(tableCards[4]);
 
+    showWinners(gameResult);
+
     lastMatchId = matchData.matchID;
+}
+
+function showWinners(matchResult) {
+    const winners = matchResult.Winners;
+    for (let playerWinnerID of winners) {
+        const playerKeyInData = playerWinnerID === 'PLAYER_1' ? 'Player1' : 'Player2';
+        const player = matchResult[playerKeyInData];
+        highlightCombo(player.ComboCards, playerWinnerID);
+    }
+}
+
+function highlightCombo(comboCards, playerType) {
+    if (!comboCards)
+        return;
+
+    let borderColor = playerType === "PLAYER_1" ? player1_borderColor : player2_borderColor;
+    for (let card of comboCards) {
+        const cardImgName = getNameOfCard(card.Rank, card.Suit);
+        let frontCards = Object.values(CardElements);
+        frontCards.find((element, index, array) =>
+        {
+            if (element.src.includes(cardImgName)) {
+                element.style = getStyleByColor(borderColor);
+            }
+        });
+    }
 }
 
 function hideAllCards() {
     for (let imgIdKey in CardElements) {
         const cardImgElem = CardElements[imgIdKey];
+        cardImgElem.style = "";
         if (cardImgElem.src != cardBackPath) {
             cardImgElem.src = cardBackPath;
         }
