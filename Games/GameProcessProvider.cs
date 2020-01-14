@@ -16,6 +16,8 @@ namespace EthWebPoker.Games
         }
 
         //Games constants
+
+        //times in miliseconds
         private const int HOLDEM_GAME_TIME = 20000; 
         private const int HOLDEM_PAUSE_TIME = 10000;
 
