@@ -14,9 +14,14 @@ namespace EthWebPoker.Games
         {
             InitializeDict();
         }
+
+        //Games constants
+        private const int HOLDEM_GAME_TIME = 20000; 
+        private const int HOLDEM_PAUSE_TIME = 10000;
+
         private void InitializeDict()
         {
-            _gameProcessDict.Add(GameType.HOLDEM_POKER, GameProcess.HoldemGameProcess());
+            _gameProcessDict.Add(GameType.HOLDEM_POKER, GameProcess.HoldemGameProcess(HOLDEM_GAME_TIME, HOLDEM_PAUSE_TIME));
         }
 
         public void StartAllGames()

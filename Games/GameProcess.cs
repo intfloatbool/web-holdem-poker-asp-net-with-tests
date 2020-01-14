@@ -10,21 +10,29 @@ namespace EthWebPoker.Games
 {
     public class GameProcess
     {
-        public static GameProcess HoldemGameProcess()
+        public static GameProcess HoldemGameProcess(int intervalTimeMs, int pauseTime)
         {
-            return new GameProcess(new HoldemGame());
+            return new GameProcess(new HoldemGame(), intervalTimeMs, pauseTime);
         }
 
         public IGame Game { get; set; }
-        public int IntervalTimeMs { get; set; } = 20000;
-        public int WaitTimeIntervalms { get; set; } = 10000;
+        public int IntervalTimeMs { get; private set; }// = 20000;
+        public int PauseTime { get; private set; }// = 10000;
         public GameResultContainer ResultContainer { get; private set; }
 
         public Action<GameResultContainer> OnResultUpdated = (result) => { };
 
-        private GameProcess(IGame game)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="game">Game logic</param>
+        /// <param name="intervalTimeMs">times between matches</param>
+        /// <param name="waitIntervalMs"></param>
+        private GameProcess(IGame game, int intervalTimeMs, int pauseTime)
         {
             this.Game = game;
+            this.IntervalTimeMs = intervalTimeMs;
+            this.PauseTime = pauseTime;
             this.ResultContainer = new GameResultContainer();
         }
 
@@ -48,7 +56,7 @@ namespace EthWebPoker.Games
 
                 ResetResultContainer();
 
-                await Task.Delay(WaitTimeIntervalms);
+                await Task.Delay(PauseTime);
 
             }
         }
