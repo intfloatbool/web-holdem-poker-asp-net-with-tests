@@ -11,8 +11,13 @@ const getStyleByColor = (color) => {
     return `${comboBorderStyle} ${color};`;
 }
 
-const delayToFetchMs = 3000;
+const soundsData = {
+    FLIP: 'flip',
+    DEALING: 'dealing',
+    SHUFFLE: 'shuffle'
+}
 
+const delayToFetchMs = 2000;
 let lastMatchId = -1;
 
 const CardElements = {
@@ -43,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     initializeCardImagesDOM();
     setInterval(handleServerData, delayToFetchMs);
+    
 });
 
 function initializeCardImagesDOM() {
@@ -58,16 +64,28 @@ async function handleServerData() {
 
     if (response.ok) { 
         let json = await response.json();
-        handleMatchCards(json);
+        await handleMatchCardsAsync(json);
     } else {
         console.error("HTTP ERROR: " + response.status);
     }
 }
 
-function handleMatchCards(matchData) {
+const TABLE_SHOW_DELAY_MS = 1500;
+
+async function showCardByDelayAsync() {
+    await waitAsync(TABLE_SHOW_DELAY_MS);
+    playSound(soundsData.FLIP);
+}
+
+function waitAsync(waitTime) {
+    return new Promise(resolve => setTimeout(resolve, waitTime));
+}
+
+async function handleMatchCardsAsync(matchData) {
 
     if (matchData.gameResultJson === null) {
         hideAllCards();
+        playSound(soundsData.SHUFFLE);
         return;
     }
 
@@ -75,6 +93,8 @@ function handleMatchCards(matchData) {
 
     if (lastMatchId === matchData.matchID)
         return;
+
+    lastMatchId = matchData.matchID;
 
     console.log(`GameResult!: \n ${JSON.stringify(gameResult)}`);
 
@@ -87,21 +107,28 @@ function handleMatchCards(matchData) {
     const player2_cards = player2_data.Cards;
     const tableCards = table_data.Cards;
 
+    playSound(soundsData.DEALING);
+
     CardElements.Player1_Card1.src = getCardImagePath(player1_cards[0]); 
     CardElements.Player1_Card2.src = getCardImagePath(player1_cards[1]); 
 
     CardElements.Player2_Card1.src = getCardImagePath(player2_cards[0]);
     CardElements.Player2_Card2.src = getCardImagePath(player2_cards[1]); 
 
+    await showCardByDelayAsync();
     CardElements.Table_Card1.src = getCardImagePath(tableCards[0]);
+    await showCardByDelayAsync();
     CardElements.Table_Card2.src = getCardImagePath(tableCards[1]);
+    await showCardByDelayAsync();
     CardElements.Table_Card3.src = getCardImagePath(tableCards[2]);
+    await showCardByDelayAsync();
     CardElements.Table_Card4.src = getCardImagePath(tableCards[3]);
+    await showCardByDelayAsync();
     CardElements.Table_Card5.src = getCardImagePath(tableCards[4]);
 
-    showWinners(gameResult);
+    await waitAsync(TABLE_SHOW_DELAY_MS);
 
-    lastMatchId = matchData.matchID;
+    showWinners(gameResult);  
 }
 
 function showWinners(matchResult) {
@@ -148,8 +175,29 @@ function hideAllCards() {
     }
 }
 
-function printWinnerData(winnerData) {
-
+function playSound(clipName) {
+    let audio = null;
+    console.log(`SoundPlaying: ${clipName}`);
+    switch (clipName) {
+        case soundsData.FLIP: {
+            audio = new Audio('/sounds/cards/card_flip_sound.wav');
+            break;
+        }
+        case soundsData.SHUFFLE: {
+            audio = new Audio('/sounds/cards/shuffling-cards.wav');
+            break;
+        }
+        case soundsData.DEALING: {
+            audio = new Audio('/sounds/cards/dealing-card.wav');
+            break;
+        }
+        default: {
+            console.error(`Cannot find sound with clipname: ${clipName}!`);
+            break;
+        }
+    };
+    if (audio)
+        audio.play();
 }
 
 function getCardImagePath(cardData) {
