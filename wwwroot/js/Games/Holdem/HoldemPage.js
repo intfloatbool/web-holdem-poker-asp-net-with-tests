@@ -70,7 +70,7 @@ async function handleServerData() {
     }
 }
 
-const TABLE_SHOW_DELAY_MS = 1500;
+const TABLE_SHOW_DELAY_MS = 1850;
 
 async function showCardByDelayAsync() {
     await waitAsync(TABLE_SHOW_DELAY_MS);
@@ -85,7 +85,6 @@ async function handleMatchCardsAsync(matchData) {
 
     if (matchData.gameResultJson === null) {
         hideAllCards();
-        playSound(soundsData.SHUFFLE);
         return;
     }
 
