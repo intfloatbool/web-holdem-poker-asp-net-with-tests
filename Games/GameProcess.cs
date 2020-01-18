@@ -1,5 +1,6 @@
 ﻿using EthWebPoker.Games.Base;
 using EthWebPoker.Games.CardGames.HoldemPoker.Gameplay;
+using EthWebPoker.Games.Dices;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,6 +14,11 @@ namespace EthWebPoker.Games
         public static GameProcess HoldemGameProcess(int intervalTimeMs, int pauseTime)
         {
             return new GameProcess(new HoldemGame(), intervalTimeMs, pauseTime);
+        }
+
+        public static GameProcess DicesGameProcess(int intervalTimeMs, int pauseTime)
+        {
+            return new GameProcess(new DiceGame(), intervalTimeMs, pauseTime);
         }
 
         public IGame Game { get; set; }

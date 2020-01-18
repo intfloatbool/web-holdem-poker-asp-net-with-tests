@@ -10,6 +10,11 @@ namespace EthWebPoker.Games.Dices
         public const int MIN_DICE_VALUE = 1;
         public const int MAX_DICE_VALUE = 6;
 
+        /// <summary>
+        /// for avoid random in tests
+        /// </summary>
+        public DiceResult? ExternalResult { get; set; } = null;
+
         public struct DiceResult
         {
             public int X;
@@ -28,6 +33,14 @@ namespace EthWebPoker.Games.Dices
 
         public DiceResult Throw()
         {
+            if (ExternalResult != null)
+            {
+                LeftCubeResult = ExternalResult.Value.X;
+                RightCubeResult = ExternalResult.Value.Y;
+                return (DiceResult)ExternalResult;
+            }
+                
+
             LeftCubeResult = _random.Next(MIN_DICE_VALUE, MAX_DICE_VALUE + 1);
             RightCubeResult = _random.Next(MIN_DICE_VALUE, MAX_DICE_VALUE + 1);
             return new DiceResult(LeftCubeResult, RightCubeResult);
