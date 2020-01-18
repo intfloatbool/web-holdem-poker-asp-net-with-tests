@@ -19,6 +19,7 @@ const soundsData = {
 
 const delayToFetchMs = 2000;
 let lastMatchId = -1;
+let isGameInProcess = false;
 
 const CardElements = {
     Player1_Card1: null,
@@ -83,6 +84,10 @@ function waitAsync(waitTime) {
 
 async function handleMatchCardsAsync(matchData) {
 
+    if (isGameInProcess === true) {
+        return;
+    }
+
     if (matchData.gameResultJson === null) {
         hideAllCards();
         return;
@@ -97,6 +102,7 @@ async function handleMatchCardsAsync(matchData) {
 
     console.log(`GameResult!: \n ${JSON.stringify(gameResult)}`);
 
+    isGameInProcess = true;
 
     const player1_data = gameResult.Player1;
     const player2_data = gameResult.Player2;
@@ -128,6 +134,10 @@ async function handleMatchCardsAsync(matchData) {
     await waitAsync(TABLE_SHOW_DELAY_MS);
 
     showWinners(gameResult);  
+
+    await waitAsync(TABLE_SHOW_DELAY_MS);
+
+    isGameInProcess = false;
 }
 
 function showWinners(matchResult) {
@@ -195,8 +205,14 @@ function playSound(clipName) {
             break;
         }
     };
-    if (audio)
-        audio.play();
+    if (audio) {     
+        try {
+            audio.play();
+        } catch (err) {
+            console.error(`cannot play sounds: \n ${err.toString()}`);
+        }
+    }
+        
 }
 
 function getCardImagePath(cardData) {
