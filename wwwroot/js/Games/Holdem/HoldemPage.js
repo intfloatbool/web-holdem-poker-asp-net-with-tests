@@ -1,11 +1,13 @@
 ﻿import * as CardData from "./CardData.js";
-
+import * as Globals from "../Globals/Globals.js";
 const cardPath = "/img/Games/CardsResizing";
 const cardBackPath = `${cardPath}/BACK.png`;
 const fetchDataUrl = '/api/HoldemGame';
 const comboBorderStyle = "border: 5px solid"
-const player1_borderColor = '#014d68';
-const player2_borderColor = '#454545';
+const player1_borderColor = Globals.PLAYER_DATA.PLAYER_1_HEX_COLOR;
+const player2_borderColor = Globals.PLAYER_DATA.PLAYER_2_HEX_COLOR;
+
+const DEBUG = true;
 
 const getStyleByColor = (color) => {
     return `${comboBorderStyle} ${color};`;
@@ -56,7 +58,7 @@ function initializeCardImagesDOM() {
     for (let imgIdKey in CardElements) {
         CardElements[imgIdKey] = document.getElementById(imgIdKey);
         if (!CardElements[imgIdKey])
-            console.error(`Cannot find card img with id ${imgIdKey} !`);
+            log(`Cannot find card img with id ${imgIdKey} !`,true)
     }
 }
 
@@ -67,7 +69,7 @@ async function handleServerData() {
         let json = await response.json();
         await handleMatchCardsAsync(json);
     } else {
-        console.error("HTTP ERROR: " + response.status);
+        log("HTTP ERROR: " + response.status, true);
     }
 }
 
@@ -100,7 +102,7 @@ async function handleMatchCardsAsync(matchData) {
 
     lastMatchId = matchData.matchID;
 
-    console.log(`GameResult!: \n ${JSON.stringify(gameResult)}`);
+    log(`GameResult!: \n ${JSON.stringify(gameResult)}`);
 
     isGameInProcess = true;
 
@@ -151,7 +153,7 @@ function showWinners(matchResult) {
         const player = matchResult[playerKeyInData];
         highlightCombo(player.ComboCards, playerWinnerID);
 
-        MatchInfoElements.WinnerText.innerText += `${CardData.BotNames[playerWinnerID]}\n`;
+        MatchInfoElements.WinnerText.innerText += `${Globals.BotNames[playerWinnerID]}\n`;
         MatchInfoElements.ComboName.innerText = CardData.ComboPrettyNames[player.Combination];
     }
 }
@@ -167,7 +169,8 @@ function highlightCombo(comboCards, playerType) {
         frontCards.find((element, index, array) =>
         {
             if (element.src.includes(cardImgName)) {
-                element.style = getStyleByColor(borderColor);
+                const colorStyle = getStyleByColor(borderColor);
+                element.style = colorStyle;
             }
         });
     }
@@ -186,7 +189,7 @@ function hideAllCards() {
 
 function playSound(clipName) {
     let audio = null;
-    console.log(`SoundPlaying: ${clipName}`);
+    log(`SoundPlaying: ${clipName}`);
     switch (clipName) {
         case soundsData.FLIP: {
             audio = new Audio('/sounds/cards/card_flip_sound.wav');
@@ -201,7 +204,7 @@ function playSound(clipName) {
             break;
         }
         default: {
-            console.error(`Cannot find sound with clipname: ${clipName}!`);
+            log(`Cannot find sound with clipname: ${clipName}!`, true);
             break;
         }
     };
@@ -209,7 +212,7 @@ function playSound(clipName) {
         try {
             audio.play();
         } catch (err) {
-            console.error(`cannot play sounds: \n ${err.toString()}`);
+            log(`cannot play sounds: \n ${err.toString()}`, true);
         }
     }
         
@@ -224,4 +227,17 @@ function getNameOfCard(rank, suit) {
     let convertedRank = CardData.RanksDict[rank];
     let convertedSuit = CardData.SuitDict[suit];
     return `${convertedRank}_${convertedSuit}.png`;
+}
+
+function log(message, isError = false) {
+
+    if(!DEBUG)
+        return;
+
+    if(isError === true) {
+        console.error(message);
+    }  else {
+        console.log(message);
+    }
+    
 }

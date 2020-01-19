@@ -5,21 +5,24 @@
 }
 
 <link rel="stylesheet" href="~/css/Games/holdem.css" />
+<link rel="stylesheet" href="~/css/games.css" />
 <div class="text-center">
     <p> Hello this is holdem page!</p>
     <div class="container" id="holdemView">
         <div class="row" id="gameRow">
             <div class="col">
-                <h4>Vladimir Bot</h4>
-                <img src="~/img/player/bot_1.png" id="playerImg" />
+                <div class="playerBox" id="player_1_box">
+                    <h4 class="player_name" id="player_1_name"></h4>
+                </div>
                 <div>
                     <img src="~/img/Games/CardsResizing/BACK.png" class="playingCard" id="Player1_Card1" />
                     <img src="~/img/Games/CardsResizing/BACK.png" class="playingCard" id="Player1_Card2" />
                 </div>
             </div>
             <div class="col">
-                <h4>Boriz Bot</h4>
-                <img src="~/img/player/bot_2.png" id="playerImg" />
+                <div class="playerBox" id="player_2_box">
+                    <h4 class="player_name" id="player_2_name"></h4>
+                </div>
                 <div>
                     <img src="~/img/Games/CardsResizing/BACK.png" class="playingCard" id="Player2_Card1" />
                     <img src="~/img/Games/CardsResizing/BACK.png" class="playingCard" id="Player2_Card2" />
@@ -47,6 +50,6 @@
             </div>
         </div>
     </div>
-
+    <script type="module" src="~/js/Games/gamesPrefsPreloader.js"></script>
     <script type="module" src="~/js/Games/Holdem/HoldemPage.js"></script>
 </div>

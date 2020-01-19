@@ -21,10 +21,7 @@ export const SuitDict = {
     CLUBS: "C",
 }
 
-export const BotNames = {
-    PLAYER_1: "Vladimir bot",
-    PLAYER_2: "Boriz bot"
-}
+
 
 export const ComboPrettyNames = {
     HIGH_CARD: "High Card",
